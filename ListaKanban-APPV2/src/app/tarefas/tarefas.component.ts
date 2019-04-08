@@ -27,7 +27,7 @@ export class TarefasComponent implements OnInit {
   filtrarListar(filtrarPor: string): any {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.tarefas.filter(
-      tarefa => tarefa.responsavel.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+      tarefa => tarefa.usuarioId.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     );
   }
 
