@@ -21,8 +21,15 @@ export class TarefasComponent implements OnInit {
   }
   set filtroTarefa(value: string) {
     this._filtroTarefa = value;
+    this.tarefasFiltradas = this.filtroTarefa ? this.filtrarListar(this.filtroTarefa) : this.tarefas;
   }
 
+  filtrarListar(filtrarPor: string): any {
+    filtrarPor = filtrarPor.toLocaleLowerCase();
+    return this.tarefas.filter(
+      tarefa => tarefa.responsavel.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+    );
+  }
 
   constructor(private http: HttpClient) { }
 
