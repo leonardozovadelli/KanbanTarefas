@@ -44,6 +44,18 @@ namespace ListaTarefaKanban_Repository
 
         }
 
+        //TAREFAS por status
+        public async Task<Tarefa[]> GetTarefaStatusAsync()
+        {
+            IQueryable<Tarefa> query = _context.Tarefas
+            .Include(c => c.Responsavel);
+
+            query = query.OrderBy(c => c.Responsavel.Id);
+
+            return await query.ToArrayAsync();
+
+        }
+
         public async Task<Tarefa[]> GetAllTarefaResponsavel(int responsavelId)
         {
             IQueryable<Tarefa> query = _context.Tarefas
