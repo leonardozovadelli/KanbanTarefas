@@ -1,0 +1,43 @@
+<div class="list-container column-container">
+
+  <div class="todo-container column-cointainer">
+    <div
+      class="list"
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="tarefas"
+      [cdkDropListConnectedTo]="[inprogressList]"
+      (cdkDropListDropped)="onDrop($event)"
+      >
+      <h2>Todo</h2>
+      <mat-card 
+      *ngFor="let tarefa of tarefas" 
+      cdkDrag>
+        <mat-card-header>
+          <mat-card-title>{{tarefa | json }}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="todo-container column-cointainer">
+      <div
+        class="list"
+        cdkDropList
+        #inprogressList="cdkDropList"
+        [cdkDropListData]="testes"
+        [cdkDropListConnectedTo]="[todoList]"
+        (cdkDropListDropped)="onDrop($event)"
+        >
+        <h2>In Progress</h2>
+        <mat-card 
+        *ngFor="let inpro of testes" 
+        cdkDrag>
+          <mat-card-header>
+            <mat-card-title>{{inpro | json }}</mat-card-title>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+
+</div>
