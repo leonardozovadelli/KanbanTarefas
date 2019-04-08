@@ -55,5 +55,15 @@ namespace ListaTarefaKanban_Repository
             return await query.ToArrayAsync();
         }
 
+        //Usuario
+        public async Task<Usuario[]> GetAllResponsavelAsync()
+        {
+            IQueryable<Usuario> query = _context.Usuarios
+            .Distinct();
+
+            query = query.OrderBy(c => c.Nome);
+
+            return await query.ToArrayAsync();
+        }
     }
 }

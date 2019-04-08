@@ -21,6 +21,8 @@ namespace ListaTarefaKanban_API.Controllers
             _repo = repo;
         }
 
+
+        //GET Tarefas
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -36,10 +38,10 @@ namespace ListaTarefaKanban_API.Controllers
 
         }
 
-        // GET
+        // GET TAREFAS
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
-        {            
+        {
             try
             {
                 var results = await _repo.GetAllTarefaResponsavel(id);
@@ -58,8 +60,9 @@ namespace ListaTarefaKanban_API.Controllers
             try
             {
                 _repo.Add(model);
-                
-                if(await _repo.SaveChangesAsync()){
+
+                if (await _repo.SaveChangesAsync())
+                {
                     return Created($"/api/tarefas/{model.Id}", model);
                 }
             }
@@ -73,17 +76,18 @@ namespace ListaTarefaKanban_API.Controllers
 
         // PUT 
         [HttpPut("{TarefaId}")]
-        public async Task<IActionResult> Put(int TarefaId,Tarefa model)
+        public async Task<IActionResult> Put(int TarefaId, Tarefa model)
         {
             try
             {
                 var evento = await _repo.GetAllTarefaResponsavel(TarefaId);
 
-                if(evento == null) return NotFound();
+                if (evento == null) return NotFound();
 
                 _repo.Update(model);
-                
-                if(await _repo.SaveChangesAsync()){
+
+                if (await _repo.SaveChangesAsync())
+                {
                     return Created($"/api/tarefas/{model.Id}", model);
                 }
             }
@@ -103,11 +107,12 @@ namespace ListaTarefaKanban_API.Controllers
             {
                 var evento = await _repo.GetAllTarefaResponsavel(TarefaId);
 
-                if(evento == null) return NotFound();
+                if (evento == null) return NotFound();
 
                 _repo.Delete(evento);
-                
-                if(await _repo.SaveChangesAsync()){
+
+                if (await _repo.SaveChangesAsync())
+                {
                     return Ok();
                 }
             }
