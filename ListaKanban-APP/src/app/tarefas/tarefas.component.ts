@@ -1,6 +1,8 @@
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-tarefas',
@@ -9,31 +11,49 @@ import { CdkDropList } from '@angular/cdk/drag-drop';
 })
 export class TarefasComponent implements OnInit {
 
-  tarefas: any;
+  tarefas: any = [];
+  testes: any = [];
   usuarios: any;
 
+
   constructor(private http: HttpClient) { }
+
+  onDrop(event: CdkDragDrop<any[]>) {
+    if (event.previousContainer !== event.container) {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex, event.currentIndex);
+      console.log(event);
+    } else {
+      moveItemInArray(this.tarefas,
+        event.previousIndex,
+        event.currentIndex);
+    }
+
+  }
 
   ngOnInit() {
     this.getTarefas();
     this.getUsuarios();
+
   }
 
-  getTarefas(){
+  getTarefas() {
     this.http.get('http://localhost:5000/api/tarefas').subscribe(
-      response => { 
-        this.tarefas = response
-      },error => {
+      response => {
+        this.tarefas = response;
+      }, error => {
         console.log(error);
       }
     );
   }
 
-  getUsuarios(){
+  getUsuarios() {
     this.http.get('http://localhost:5000/api/usuarios').subscribe(
-      response => { 
-        this.usuarios = response
-      },error => {
+      response => {
+        this.usuarios = response;
+        this.testes = response;
+      }, error => {
         console.log(error);
       }
     );

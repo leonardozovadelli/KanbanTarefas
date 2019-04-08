@@ -1,1 +1,6 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body, html, .mat-card, mat-card-title {
+    background-color: RGBA(46,49,49,1);
+    color: white;
+}

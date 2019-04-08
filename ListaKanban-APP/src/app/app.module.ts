@@ -5,8 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TarefasComponent } from './tarefas/tarefas.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCardModule} from '@angular/material';
+import {MatCardModule, MatGridListModule} from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [
@@ -19,7 +20,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
       HttpClientModule,
       BrowserAnimationsModule,
       MatCardModule,
-      DragDropModule
+      DragDropModule,
+      FormsModule,
    ],
    providers: [],
    bootstrap: [
