@@ -1,43 +1,62 @@
-<div class="list-container column-container">
+<div class="container">
+  <div class="col-sm" style="display: inline-block;">
+    <label>Responsavel: </label>
+    <select ngModel>
+      <option *ngFor="let usuario of usuarios" value="{{ usuario.id }}">{{
+        usuario.nome
+      }}</option>
+    </select>
 
-  <div class="todo-container column-cointainer">
-    <div
-      class="list"
-      cdkDropList
-      #todoList="cdkDropList"
-      [cdkDropListData]="tarefas"
-      [cdkDropListConnectedTo]="[inprogressList]"
-      (cdkDropListDropped)="onDrop($event)"
-      >
-      <h2>Todo</h2>
-      <mat-card 
-      *ngFor="let tarefa of tarefas" 
-      cdkDrag>
-        <mat-card-header>
-          <mat-card-title>{{tarefa | json }}</mat-card-title>
-        </mat-card-header>
-      </mat-card>
-    </div>
-  </div>
 
-  <div class="todo-container column-cointainer">
+    <div class="row">
+      <!-- To Do -->
       <div
-        class="list"
+        class="col-sm-4"
+        cdkDropList
+        #todoList="cdkDropList"
+        [cdkDropListData]="tarefas"
+        [cdkDropListConnectedTo]="[inprogressList]"
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        <h2>Todo</h2>
+        <mat-card *ngFor="let tarefa of tarefas" cdkDrag>
+          <mat-card-header>
+            <mat-card-title>{{ tarefa.titulo | json }}</mat-card-title>
+          </mat-card-header>
+        </mat-card>
+      </div>
+      <!-- In Progress -->
+      <div
+        class="col-sm-4"
         cdkDropList
         #inprogressList="cdkDropList"
         [cdkDropListData]="testes"
-        [cdkDropListConnectedTo]="[todoList]"
+        [cdkDropListConnectedTo]="[todoList,doneList]"
         (cdkDropListDropped)="onDrop($event)"
-        >
+      >
         <h2>In Progress</h2>
-        <mat-card 
-        *ngFor="let inpro of testes" 
-        cdkDrag>
+        <mat-card *ngFor="let inpro of testes" cdkDrag>
           <mat-card-header>
-            <mat-card-title>{{inpro | json }}</mat-card-title>
+            <mat-card-title>{{ inpro.nome | json }}</mat-card-title>
+          </mat-card-header>
+        </mat-card>
+      </div>
+      <!-- Done -->
+      <div
+        class="col-sm-4"
+        cdkDropList
+        #doneList="cdkDropList"
+        [cdkDropListData]="tarefas"
+        [cdkDropListConnectedTo]="[inprogressList]"
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        <h2 class="text-center">Done</h2>
+        <mat-card *ngFor="let done of tarefas" cdkDrag>
+          <mat-card-header>
+            <mat-card-title>{{ done.titulo | json }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>
     </div>
-
+  </div>
 </div>

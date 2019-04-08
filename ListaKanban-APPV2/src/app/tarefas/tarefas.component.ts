@@ -13,19 +13,29 @@ export class TarefasComponent implements OnInit {
   testes: any = [];
   usuarios: any;
 
+  tarefasFiltradas: any = [];
+
+  _filtroTarefa: string;
+  get filtroTarefa(): string {
+    return this._filtroTarefa;
+  }
+  set filtroTarefa(value: string) {
+    this._filtroTarefa = value;
+  }
+
 
   constructor(private http: HttpClient) { }
 
-onDrop(event: CdkDragDrop<any[]>) {
-  if(event.previousContainer === event.container){
-    moveItemInArray(event.container.data,
-      event.previousIndex, event.currentIndex);
-  } else {
-    transferArrayItem(event.previousContainer.data,
-      event.container.data,
-      event.previousIndex, event.currentIndex);
+  onDrop(event: CdkDragDrop<any[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data,
+        event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex, event.currentIndex);
+    }
   }
-}
 
   ngOnInit() {
     this.getTarefas();
