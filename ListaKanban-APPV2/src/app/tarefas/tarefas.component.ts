@@ -50,6 +50,9 @@ export class TarefasComponent implements OnInit {
   ngOnInit() {
     this.getTarefas();
     this.getUsuarios();
+    this.getTarefasStatus(0);
+    this.getTarefasStatus(1);
+    this.getTarefasStatus(2);
   }
 
   getTarefas() {
@@ -65,9 +68,9 @@ export class TarefasComponent implements OnInit {
   getTarefasStatus(status: number) {
     this.http.get('http://localhost:5000/api/tarefas/getByStatus/'+ status).subscribe(
       response => {
-        if(status == 0){
+        if(status == 0 && response != null){
           this.tarefasTodo = response;
-        } else if (status == 1) {
+        } else if (status == 1 && response != null) {
           this.tarefasInPro = response;
         } else {
           this.tarefasDone = response;
@@ -88,4 +91,5 @@ export class TarefasComponent implements OnInit {
       }
     );
   }
+
 }

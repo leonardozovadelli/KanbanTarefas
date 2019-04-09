@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TarefasComponent } from './tarefas/tarefas.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [
@@ -21,6 +22,7 @@ import { TarefasComponent } from './tarefas/tarefas.component';
       BrowserAnimationsModule,
       MatCardModule,
       DragDropModule,
+      FormsModule,
 
    ],
    providers: [],

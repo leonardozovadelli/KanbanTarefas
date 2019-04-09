@@ -13,15 +13,14 @@
         class="col-sm-4"
         cdkDropList
         #todoList="cdkDropList"
-        [cdkDropListData]="tarefas"
+        [cdkDropListData]="tarefasTodo"
         [cdkDropListConnectedTo]="[inprogressList]"
         (cdkDropListDropped)="onDrop($event)"
-        [(ngModel)]="getTarefasStatus(0)"
       >
         <h2>To Do</h2>
-        <mat-card *ngFor="let tarefa of tarefas" cdkDrag>
+        <mat-card *ngFor="let tarefa of tarefasTodo" cdkDrag>
           <mat-card-header>
-            <mat-card-title>{{ tarefa.titulo| json }}</mat-card-title>
+            <mat-card-title>{{ tarefa.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>
@@ -30,14 +29,14 @@
         class="col-sm-4"
         cdkDropList
         #inprogressList="cdkDropList"
-        [cdkDropListData]="testes"
+        [cdkDropListData]="tarefasInPro"
         [cdkDropListConnectedTo]="[todoList,doneList]"
         (cdkDropListDropped)="onDrop($event)"
       >
         <h2>In Progress</h2>
-        <mat-card *ngFor="let inpro of testes" cdkDrag>
+        <mat-card *ngFor="let inpro of tarefasInPro" cdkDrag>
           <mat-card-header>
-            <mat-card-title>{{ inpro.nome | json }}</mat-card-title>
+            <mat-card-title>{{ inpro.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>
@@ -46,14 +45,14 @@
         class="col-sm-4"
         cdkDropList
         #doneList="cdkDropList"
-        [cdkDropListData]="tarefas"
+        [cdkDropListData]="tarefasDone"
         [cdkDropListConnectedTo]="[inprogressList]"
         (cdkDropListDropped)="onDrop($event)"
       >
         <h2 class="text-center">Done</h2>
-        <mat-card *ngFor="let done of tarefas" cdkDrag>
+        <mat-card *ngFor="let done of tarefasDone" cdkDrag>
           <mat-card-header>
-            <mat-card-title>{{ done.titulo | json }}</mat-card-title>
+            <mat-card-title>{{ done.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>
