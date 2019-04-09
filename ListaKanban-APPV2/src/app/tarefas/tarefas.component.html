@@ -7,7 +7,7 @@
       {{ usuario.nome }}</option>
     </select>
 
-    <div class="row" style="border: 2px solid black;">
+    <div class="row" style="border: 2px solid black; padding: 0px 0px 25px 0px">
       <!-- To Do -->
       <div
         class="col-sm-4"
@@ -38,7 +38,7 @@
         <h2>In Progress</h2>
         <mat-card *ngFor="let inpro of tarefasInPro" cdkDrag>
           <mat-card-header>
-            <mat-card-title id="{{inpro.id}}">{{ inpro.titulo }}</mat-card-title>
+            <mat-card-title name="" id="{{inpro.id}}">{{ inpro.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>
@@ -53,9 +53,9 @@
         (cdkDropListDropped)="onDrop(tarefasDone, $event)"
       >
         <h2 class="text-center">Done</h2>
-        <mat-card *ngFor="let done of tarefasDone" cdkDrag>
+        <mat-card *ngFor="let done of tarefasDone" cdkDrag id="{{done.id}}">
           <mat-card-header>
-            <mat-card-title id="{{done.id}}">{{ done.titulo }}</mat-card-title>
+            <mat-card-title >{{ done.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>

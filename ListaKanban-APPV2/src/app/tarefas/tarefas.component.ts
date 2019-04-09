@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Tarefa } from '../_models/Tarefa';
+import { identity } from 'rxjs';
 
 @Component({
   selector: 'app-tarefas',
@@ -9,6 +10,9 @@ import { Tarefa } from '../_models/Tarefa';
   styleUrls: ['./tarefas.component.css']
 })
 export class TarefasComponent implements OnInit {
+
+
+  constructor(private http: HttpClient) { }
 
   tarefas: any = [];
   tarefasTodo: Tarefa[];
@@ -35,27 +39,28 @@ export class TarefasComponent implements OnInit {
     );
   }
 
-  constructor(private http: HttpClient) { }
-
   onDrop(tarefa: Tarefa, event: CdkDragDrop<Tarefa[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data,
-        event.previousIndex, event.currentIndex);
-    } else {
+    if (event.previousContainer !== event.container) {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex, event.currentIndex);
-        console.log( event.item.element.nativeElement );
-        var status = parseInt(event.container.id);
-        if (status == 0){
-          this.editarTarefa(tarefa.id, 0 , tarefa);
-        }
-        if (status == 1){
-          this.editarTarefa(tarefa.id, 1 , tarefa);
-        }
-        if ( status == 2){
-          this.editarTarefa(tarefa.id, 2 , tarefa);
-        }
+      console.log(event.previousContainer.data);
+      console.log(event.container.data)
+      console.log(event.container.id)
+      var status = parseInt(event.container.id);
+      if (status == 0) {
+        this.editarTarefa(tarefa.id, 0, tarefa);
+      }
+      if (status == 1) {
+        this.editarTarefa(tarefa.id, 1, tarefa);
+      }
+      if (status == 2) {
+        this.editarTarefa(tarefa.id, 2, tarefa);
+      }
+    }
+    else {
+      moveItemInArray(event.container.data,
+        event.previousIndex, event.currentIndex);
     }
   }
 
@@ -78,9 +83,9 @@ export class TarefasComponent implements OnInit {
   }
 
   getTarefasStatus(status: number) {
-    this.http.get('http://localhost:5000/api/tarefas/getByStatus/'+ status).subscribe(
+    this.http.get('http://localhost:5000/api/tarefas/getByStatus/' + status).subscribe(
       (response: Tarefa[]) => {
-        if(status == 0 && response != null){
+        if (status == 0 && response != null) {
           this.tarefasTodo = response;
         } else if (status == 1 && response != null) {
           this.tarefasInPro = response;
@@ -104,8 +109,8 @@ export class TarefasComponent implements OnInit {
     );
   }
 
-  editarTarefa(id: number, status: number, tarefa: Tarefa){
-    console.log(id);
+  editarTarefa(id: number, status: number, tarefa: Tarefa) {
+    console.log("EditarTarefa: " + id);
     tarefa.status = status;
     this.http.put(`http://localhost:5000/api/tarefas/${tarefa.id}`, tarefa).subscribe(
       () => {
