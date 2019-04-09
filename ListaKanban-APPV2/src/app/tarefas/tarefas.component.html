@@ -16,11 +16,15 @@
         #todoList="cdkDropList"
         [cdkDropListData]="tarefasTodo"
         [cdkDropListConnectedTo]="[inprogressList, doneList]"
-        (cdkDropListDropped)="onDrop($event)">
+        (cdkDropListDropped)="onDrop($event)"
+      >
         <h2>To Do</h2>
-        <mat-card #pintarCard *ngFor="let todo of tarefasTodo" cdkDrag>
+        <mat-card
+         *ngFor="let todo of tarefasTodo" cdkDrag
+         [ngClass]="mudarCor(todo.prioridade)">
           <mat-card-header>
-            <mat-card-title id="{{ todo.id }}">{{ todo.titulo }}</mat-card-title>
+            <mat-card-title 
+            id="{{ todo.id }}">{{ todo.titulo }}</mat-card-title>
             <mat-card-subtitle>Prioridade: {{ todo.prioridade }}</mat-card-subtitle>
             <mat-card-subtitle>Status: {{ todo.status }}</mat-card-subtitle>
           </mat-card-header>
@@ -37,7 +41,9 @@
         (cdkDropListDropped)="onDrop($event)"
       >
         <h2>In Progress</h2>
-        <mat-card *ngFor="let inpro of tarefasInPro" [ngStyle]="" cdkDrag>
+        <mat-card *ngFor="let inpro of tarefasInPro" 
+        [ngClass]="mudarCor(inpro.prioridade)"
+        cdkDrag>
           <mat-card-header>
             <mat-card-title id="{{ inpro.id }}">{{
               inpro.titulo
@@ -60,7 +66,9 @@
         (cdkDropListDropped)="onDrop($event)"
       >
         <h2 class="text-center">Done</h2>
-        <mat-card *ngFor="let done of tarefasDone" cdkDrag id="{{ done.id }}">
+        <mat-card *ngFor="let done of tarefasDone" 
+        [ngClass]="mudarCor(done.prioridade)"
+        cdkDrag id="{{ done.id }}">
           <mat-card-header>
             <mat-card-title>{{ done.titulo }}</mat-card-title>
             <mat-card-subtitle

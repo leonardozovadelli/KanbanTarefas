@@ -10,11 +10,17 @@ import { Tarefa } from '../_models/Tarefa';
 })
 export class TarefasComponent implements OnInit {
 
-
   constructor(private http: HttpClient) { }
 
-  @ViewChild('pintarCard') cor: ElementRef;
-
+  mudarCor(prio: number) {
+    console.log("prio");
+    let classes = [
+      'baixa',
+      'media',
+      'alta'
+    ]
+    return classes[prio];
+  }
 
   tarefasTodo: Tarefa[];
   tarefasInPro: Tarefa[];
@@ -47,9 +53,10 @@ export class TarefasComponent implements OnInit {
       if (status == 2) {
         this.editarTarefa(event.container.data[event.currentIndex].id, 2, event.container.data[event.currentIndex]);
       }
+
     } else {
-      moveItemInArray(event.container.data,
-        event.previousIndex, event.currentIndex);
+      // moveItemInArray(event.container.data,
+      //   event.previousIndex, event.currentIndex);
     }
   }
 
