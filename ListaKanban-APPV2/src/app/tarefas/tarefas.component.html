@@ -22,6 +22,7 @@
         <mat-card *ngFor="let todo of tarefasTodo" cdkDrag>
           <mat-card-header>
             <mat-card-title id="{{todo.id}}">{{ todo.titulo }}</mat-card-title>
+            <mat-card-subtitle >{{ todo.prioridade }}  | Status: {{todo.status}}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>
@@ -39,6 +40,7 @@
         <mat-card *ngFor="let inpro of tarefasInPro" cdkDrag>
           <mat-card-header>
             <mat-card-title name="" id="{{inpro.id}}">{{ inpro.titulo }}</mat-card-title>
+            <mat-card-subtitle >{{ inpro.prioridade }}  | Status: {{inpro.status}}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>
@@ -56,6 +58,7 @@
         <mat-card *ngFor="let done of tarefasDone" cdkDrag id="{{done.id}}">
           <mat-card-header>
             <mat-card-title >{{ done.titulo }}</mat-card-title>
+            <mat-card-subtitle >{{ done.prioridade }} | Status: {{done.status}}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>

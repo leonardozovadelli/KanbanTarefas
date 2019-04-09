@@ -48,7 +48,10 @@ namespace ListaTarefaKanban_Repository
         public async Task<Tarefa[]> GetTarefaStatusAsync(int status)
         {
             IQueryable<Tarefa> query = _context.Tarefas
-            .Where(d => d.Status == status);
+            .Include(r => r.Responsavel);
+            
+            query = query.Where(d => d.Status == status)
+            .OrderByDescending(t => t.Prioridade);
 
             return await query.ToArrayAsync();
 

@@ -1,3 +1,4 @@
+import { Usuario } from './Usuario';
 export interface Tarefa {
     id: number;
     titulo: string

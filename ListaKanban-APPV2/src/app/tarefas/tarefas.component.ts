@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Tarefa } from '../_models/Tarefa';
 import { identity } from 'rxjs';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-tarefas',
@@ -52,17 +53,17 @@ export class TarefasComponent implements OnInit {
       // console.log(event.previousIndex);
       // console.log("Foi para (index):");
       // console.log(event.currentIndex);
-      console.log("Objeto");
-      console.log(event.container.data[event.currentIndex])
+      console.log("Objeto:");
+      console.log(event.container.data[event.currentIndex]);
       var status = parseInt(event.container.id);
       if (status == 0) {
-        this.editarTarefa(event.container.data[event.currentIndex].id, 0, tarefa);
+        this.editarTarefa(event.container.data[event.currentIndex].id, 0, event.container.data[event.currentIndex]);
       }
       if (status == 1) {
-        this.editarTarefa(event.container.data[event.currentIndex].id, 1, tarefa);
+        this.editarTarefa(event.container.data[event.currentIndex].id, 1, event.container.data[event.currentIndex]);
       }
       if (status == 2) {
-        this.editarTarefa(event.container.data[event.currentIndex].id, 2, tarefa);
+        this.editarTarefa(event.container.data[event.currentIndex].id, 2, event.container.data[event.currentIndex]);
       }
     } else {
       moveItemInArray(event.container.data,
@@ -116,8 +117,10 @@ export class TarefasComponent implements OnInit {
   }
 
   editarTarefa(id: number, status: number, tarefa: Tarefa) {
-    console.log("EditarTarefa:" + id);
+    console.log("EditarTarefa:");
+    console.log(tarefa);
     tarefa.status = status;
+    
     this.http.put(`http://localhost:5000/api/tarefas/${id}`, tarefa).subscribe(
       () => {
         console.log("Deu certo");
