@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Tarefa } from '../_models/Tarefa';
-import { identity } from 'rxjs';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-tarefas',
@@ -15,33 +13,16 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  cor: string;
-  tarefas: any = [];
+  @ViewChild('pintarCard') cor: ElementRef;
+
+
   tarefasTodo: Tarefa[];
   tarefasInPro: Tarefa[];
   tarefasDone: Tarefa[];
   testes: any = [];
   usuarios: any;
 
-  tarefasFiltradas: any = [];
-
-  _filtroTarefa: string;
-  get filtroTarefa(): string {
-    return this._filtroTarefa;
-  }
-  set filtroTarefa(value: string) {
-    this._filtroTarefa = value;
-    this.tarefasFiltradas = this.filtroTarefa ? this.filtrarListar(this.filtroTarefa) : this.tarefas;
-  }
-
-  filtrarListar(filtrarPor: string): any {
-    // filtrarPor = filtrarPor.toLocaleLowerCase();
-    return this.tarefas.filter(
-      tarefa => tarefa.responsavel.nome === filtrarPor
-    );
-  }
-
-  onDrop(tarefa: Tarefa, event: CdkDragDrop<Tarefa[]>) {
+  onDrop(event: CdkDragDrop<Tarefa[]>) {
     if (event.previousContainer !== event.container) {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
@@ -73,21 +54,10 @@ export class TarefasComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTarefas();
     this.getUsuarios();
     this.getTarefasStatus(0);
     this.getTarefasStatus(1);
     this.getTarefasStatus(2);
-  }
-
-  getTarefas() {
-    this.http.get('http://localhost:5000/api/tarefas').subscribe(
-      response => {
-        this.tarefas = response;
-      }, error => {
-        console.log(error);
-      }
-    );
   }
 
   getTarefasStatus(status: number) {
@@ -110,7 +80,6 @@ export class TarefasComponent implements OnInit {
     this.http.get('http://localhost:5000/api/usuarios').subscribe(
       response => {
         this.usuarios = response;
-        this.testes = response;
       }, error => {
         console.log(error);
       }
@@ -118,24 +87,17 @@ export class TarefasComponent implements OnInit {
   }
 
   editarTarefa(id: number, status: number, tarefa: Tarefa) {
-    console.log("EditarTarefa:");
+    console.log('EditarTarefa: ');
     console.log(tarefa);
     tarefa.status = status;
     this.http.put(`http://localhost:5000/api/tarefas/${id}`, tarefa).subscribe(
       () => {
-        console.log("Deu certo");
+        console.log('Deu certo');
       }, error => {
         console.log(error);
       }
     );
   }
 
-  mudarCor(){
-    this.tarefasTodo.forEach(c => {
-      if(c.prioridade == 0){
-
-      }
-    })
-  }
 
 }

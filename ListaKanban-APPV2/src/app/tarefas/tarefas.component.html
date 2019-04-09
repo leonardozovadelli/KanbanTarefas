@@ -1,10 +1,10 @@
 <div class="container">
   <div class="col-sm" style="display: inline-block;">
     <label>Responsavel: </label>
-    <select >
-      <option *ngFor="let usuario of usuarios" 
-      value="{{ usuario.nome }}">
-      {{ usuario.nome }}</option>
+    <select>
+      <option *ngFor="let usuario of usuarios" value="{{ usuario.nome }}">
+        {{ usuario.nome }}</option
+      >
     </select>
 
     <div class="row" style="border: 2px solid black; padding: 0px 0px 25px 0px">
@@ -16,13 +16,13 @@
         #todoList="cdkDropList"
         [cdkDropListData]="tarefasTodo"
         [cdkDropListConnectedTo]="[inprogressList, doneList]"
-        (cdkDropListDropped)="onDrop(tarefasTodo, $event)"
-      >
+        (cdkDropListDropped)="onDrop($event)">
         <h2>To Do</h2>
-        <mat-card *ngFor="let todo of tarefasTodo" cdkDrag>
+        <mat-card #pintarCard *ngFor="let todo of tarefasTodo" cdkDrag>
           <mat-card-header>
-            <mat-card-title id="{{todo.id}}">{{ todo.titulo }}</mat-card-title>
-            <mat-card-subtitle >{{ todo.prioridade }}  | Status: {{todo.status}}</mat-card-subtitle>
+            <mat-card-title id="{{ todo.id }}">{{ todo.titulo }}</mat-card-title>
+            <mat-card-subtitle>Prioridade: {{ todo.prioridade }}</mat-card-subtitle>
+            <mat-card-subtitle>Status: {{ todo.status }}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>
@@ -33,17 +33,19 @@
         cdkDropList
         #inprogressList="cdkDropList"
         [cdkDropListData]="tarefasInPro"
-        [cdkDropListConnectedTo]="[todoList,doneList]"
-        (cdkDropListDropped)="onDrop(tarefasInPro, $event)"
+        [cdkDropListConnectedTo]="[todoList, doneList]"
+        (cdkDropListDropped)="onDrop($event)"
       >
         <h2>In Progress</h2>
-        <mat-card 
-        *ngFor="let inpro of tarefasInPro" 
-        [ngStyle]=""
-        cdkDrag>
+        <mat-card *ngFor="let inpro of tarefasInPro" [ngStyle]="" cdkDrag>
           <mat-card-header>
-            <mat-card-title name="" id="{{inpro.id}}">{{ inpro.titulo }}</mat-card-title>
-            <mat-card-subtitle >{{ inpro.prioridade }}  | Status: {{inpro.status}}</mat-card-subtitle>
+            <mat-card-title id="{{ inpro.id }}">{{
+              inpro.titulo
+            }}</mat-card-title>
+            <mat-card-subtitle
+              >Prioridade: {{ inpro.prioridade }}</mat-card-subtitle
+            >
+            <mat-card-subtitle>Status: {{ inpro.status }}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>
@@ -54,14 +56,17 @@
         cdkDropList
         #doneList="cdkDropList"
         [cdkDropListData]="tarefasDone"
-        [cdkDropListConnectedTo]="[todoList,inprogressList]"
-        (cdkDropListDropped)="onDrop(tarefasDone, $event)"
+        [cdkDropListConnectedTo]="[todoList, inprogressList]"
+        (cdkDropListDropped)="onDrop($event)"
       >
         <h2 class="text-center">Done</h2>
-        <mat-card *ngFor="let done of tarefasDone" cdkDrag id="{{done.id}}">
+        <mat-card *ngFor="let done of tarefasDone" cdkDrag id="{{ done.id }}">
           <mat-card-header>
-            <mat-card-title >{{ done.titulo }}</mat-card-title>
-            <mat-card-subtitle >{{ done.prioridade }} | Status: {{done.status}}</mat-card-subtitle>
+            <mat-card-title>{{ done.titulo }}</mat-card-title>
+            <mat-card-subtitle
+              >Prioridade: {{ done.prioridade }}</mat-card-subtitle
+            >
+            <mat-card-subtitle>Status: {{ done.status }}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
       </div>
