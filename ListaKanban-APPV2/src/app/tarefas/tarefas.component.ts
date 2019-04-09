@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Tarefa } from '../_models/Tarefa';
 
 @Component({
   selector: 'app-tarefas',
@@ -10,9 +11,9 @@ import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/dr
 export class TarefasComponent implements OnInit {
 
   tarefas: any = [];
-  tarefasTodo: any = [];
-  tarefasInPro: any = [];
-  tarefasDone: any = [];
+  tarefasTodo: Tarefa[];
+  tarefasInPro: Tarefa[];
+  tarefasDone: Tarefa[];
   testes: any = [];
   usuarios: any;
 
@@ -36,7 +37,7 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  onDrop(event: CdkDragDrop<any[]>) {
+  onDrop(event: CdkDragDrop<Tarefa[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data,
         event.previousIndex, event.currentIndex);
@@ -67,7 +68,7 @@ export class TarefasComponent implements OnInit {
 
   getTarefasStatus(status: number) {
     this.http.get('http://localhost:5000/api/tarefas/getByStatus/'+ status).subscribe(
-      response => {
+      (response: Tarefa[]) => {
         if(status == 0 && response != null){
           this.tarefasTodo = response;
         } else if (status == 1 && response != null) {
@@ -90,6 +91,10 @@ export class TarefasComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  editarTarefa(tarefa: Tarefa){
+
   }
 
 }

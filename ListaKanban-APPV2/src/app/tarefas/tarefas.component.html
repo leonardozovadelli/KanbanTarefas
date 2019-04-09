@@ -14,7 +14,7 @@
         cdkDropList
         #todoList="cdkDropList"
         [cdkDropListData]="tarefasTodo"
-        [cdkDropListConnectedTo]="[inprogressList]"
+        [cdkDropListConnectedTo]="[inprogressList, doneList]"
         (cdkDropListDropped)="onDrop($event)"
       >
         <h2>To Do</h2>
@@ -46,7 +46,7 @@
         cdkDropList
         #doneList="cdkDropList"
         [cdkDropListData]="tarefasDone"
-        [cdkDropListConnectedTo]="[inprogressList]"
+        [cdkDropListConnectedTo]="[todoList,inprogressList]"
         (cdkDropListDropped)="onDrop($event)"
       >
         <h2 class="text-center">Done</h2>
