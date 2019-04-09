@@ -12,6 +12,16 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  inserirIcon(esfPrev: number, esfReal: number){
+    let classes =[]
+    if(esfPrev < esfReal){
+      classes = [
+        'glyphicon glyphicon-info-sign ml-auto mr-auto mt-auto mb-auto'
+      ]
+    }
+    return classes;
+  }
+
   mudarCor(prio: number) {
     console.log("prio");
     let classes = [
@@ -25,6 +35,7 @@ export class TarefasComponent implements OnInit {
   tarefasTodo: Tarefa[];
   tarefasInPro: Tarefa[];
   tarefasDone: Tarefa[];
+  inicializar: any = [];
   testes: any = [];
   usuarios: any;
 
@@ -53,10 +64,9 @@ export class TarefasComponent implements OnInit {
       if (status == 2) {
         this.editarTarefa(event.container.data[event.currentIndex].id, 2, event.container.data[event.currentIndex]);
       }
-
     } else {
-      // moveItemInArray(event.container.data,
-      //   event.previousIndex, event.currentIndex);
+      moveItemInArray(event.container.data,
+        event.previousIndex, event.currentIndex);
     }
   }
 
@@ -74,7 +84,7 @@ export class TarefasComponent implements OnInit {
           this.tarefasTodo = response;
         } else if (status === 1 && response != null) {
           this.tarefasInPro = response;
-        } else {
+        } else if (status === 2 && response != null){
           this.tarefasDone = response;
         }
       }, error => {
