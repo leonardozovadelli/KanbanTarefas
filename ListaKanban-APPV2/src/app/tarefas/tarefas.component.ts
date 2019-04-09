@@ -44,21 +44,27 @@ export class TarefasComponent implements OnInit {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex, event.currentIndex);
-      console.log(event.previousContainer.data);
-      console.log(event.container.data)
-      console.log(event.container.id)
+      // console.log("Estava (previous):");
+      // console.log(event.previousContainer.data);
+      // console.log("Foi para (container):");
+      // console.log(event.container.data);
+      // console.log("Estava (previous):");
+      // console.log(event.previousIndex);
+      // console.log("Foi para (index):");
+      // console.log(event.currentIndex);
+      console.log("Objeto");
+      console.log(event.container.data[event.currentIndex])
       var status = parseInt(event.container.id);
       if (status == 0) {
-        this.editarTarefa(tarefa.id, 0, tarefa);
+        this.editarTarefa(event.container.data[event.currentIndex].id, 0, tarefa);
       }
       if (status == 1) {
-        this.editarTarefa(tarefa.id, 1, tarefa);
+        this.editarTarefa(event.container.data[event.currentIndex].id, 1, tarefa);
       }
       if (status == 2) {
-        this.editarTarefa(tarefa.id, 2, tarefa);
+        this.editarTarefa(event.container.data[event.currentIndex].id, 2, tarefa);
       }
-    }
-    else {
+    } else {
       moveItemInArray(event.container.data,
         event.previousIndex, event.currentIndex);
     }
@@ -110,10 +116,11 @@ export class TarefasComponent implements OnInit {
   }
 
   editarTarefa(id: number, status: number, tarefa: Tarefa) {
-    console.log("EditarTarefa: " + id);
+    console.log("EditarTarefa:" + id);
     tarefa.status = status;
-    this.http.put(`http://localhost:5000/api/tarefas/${tarefa.id}`, tarefa).subscribe(
+    this.http.put(`http://localhost:5000/api/tarefas/${id}`, tarefa).subscribe(
       () => {
+        console.log("Deu certo");
       }, error => {
         console.log(error);
       }
