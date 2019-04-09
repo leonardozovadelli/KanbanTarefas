@@ -16,6 +16,7 @@
         [cdkDropListData]="tarefas"
         [cdkDropListConnectedTo]="[inprogressList]"
         (cdkDropListDropped)="onDrop($event)"
+        [(ngModel)]="getTarefasStatus(0)"
       >
         <h2>To Do</h2>
         <mat-card *ngFor="let tarefa of tarefas" cdkDrag>

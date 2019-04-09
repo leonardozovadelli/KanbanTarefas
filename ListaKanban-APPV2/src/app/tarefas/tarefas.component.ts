@@ -10,6 +10,9 @@ import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/dr
 export class TarefasComponent implements OnInit {
 
   tarefas: any = [];
+  tarefasTodo: any = [];
+  tarefasInPro: any = [];
+  tarefasDone: any = [];
   testes: any = [];
   usuarios: any;
 
@@ -47,13 +50,28 @@ export class TarefasComponent implements OnInit {
   ngOnInit() {
     this.getTarefas();
     this.getUsuarios();
-
   }
 
   getTarefas() {
     this.http.get('http://localhost:5000/api/tarefas').subscribe(
       response => {
         this.tarefas = response;
+      }, error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTarefasStatus(status: number) {
+    this.http.get('http://localhost:5000/api/tarefas/getByStatus/'+ status).subscribe(
+      response => {
+        if(status == 0){
+          this.tarefasTodo = response;
+        } else if (status == 1) {
+          this.tarefasInPro = response;
+        } else {
+          this.tarefasDone = response;
+        }
       }, error => {
         console.log(error);
       }
