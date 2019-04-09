@@ -15,6 +15,7 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  cor: string;
   tarefas: any = [];
   tarefasTodo: Tarefa[];
   tarefasInPro: Tarefa[];
@@ -53,8 +54,8 @@ export class TarefasComponent implements OnInit {
       // console.log(event.previousIndex);
       // console.log("Foi para (index):");
       // console.log(event.currentIndex);
-      console.log("Objeto:");
-      console.log(event.container.data[event.currentIndex]);
+      // console.log("Objeto:");
+      // console.log(event.container.data[event.currentIndex]);
       var status = parseInt(event.container.id);
       if (status == 0) {
         this.editarTarefa(event.container.data[event.currentIndex].id, 0, event.container.data[event.currentIndex]);
@@ -92,9 +93,9 @@ export class TarefasComponent implements OnInit {
   getTarefasStatus(status: number) {
     this.http.get('http://localhost:5000/api/tarefas/getByStatus/' + status).subscribe(
       (response: Tarefa[]) => {
-        if (status == 0 && response != null) {
+        if (status === 0 && response != null) {
           this.tarefasTodo = response;
-        } else if (status == 1 && response != null) {
+        } else if (status === 1 && response != null) {
           this.tarefasInPro = response;
         } else {
           this.tarefasDone = response;
@@ -120,7 +121,6 @@ export class TarefasComponent implements OnInit {
     console.log("EditarTarefa:");
     console.log(tarefa);
     tarefa.status = status;
-    
     this.http.put(`http://localhost:5000/api/tarefas/${id}`, tarefa).subscribe(
       () => {
         console.log("Deu certo");
@@ -128,6 +128,14 @@ export class TarefasComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  mudarCor(){
+    this.tarefasTodo.forEach(c => {
+      if(c.prioridade == 0){
+
+      }
+    })
   }
 
 }

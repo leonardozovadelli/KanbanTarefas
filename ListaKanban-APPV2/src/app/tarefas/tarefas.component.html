@@ -37,7 +37,10 @@
         (cdkDropListDropped)="onDrop(tarefasInPro, $event)"
       >
         <h2>In Progress</h2>
-        <mat-card *ngFor="let inpro of tarefasInPro" cdkDrag>
+        <mat-card 
+        *ngFor="let inpro of tarefasInPro" 
+        [ngStyle]=""
+        cdkDrag>
           <mat-card-header>
             <mat-card-title name="" id="{{inpro.id}}">{{ inpro.titulo }}</mat-card-title>
             <mat-card-subtitle >{{ inpro.prioridade }}  | Status: {{inpro.status}}</mat-card-subtitle>
