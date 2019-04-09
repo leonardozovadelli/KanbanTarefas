@@ -11,48 +11,51 @@
       <!-- To Do -->
       <div
         class="col-sm-4"
+        id="0"
         cdkDropList
         #todoList="cdkDropList"
         [cdkDropListData]="tarefasTodo"
         [cdkDropListConnectedTo]="[inprogressList, doneList]"
-        (cdkDropListDropped)="onDrop($event)"
+        (cdkDropListDropped)="onDrop(tarefasTodo, $event)"
       >
         <h2>To Do</h2>
-        <mat-card *ngFor="let tarefa of tarefasTodo" cdkDrag>
+        <mat-card *ngFor="let todo of tarefasTodo" cdkDrag>
           <mat-card-header>
-            <mat-card-title>{{ tarefa.titulo }}</mat-card-title>
+            <mat-card-title id="{{todo.id}}">{{ todo.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>
       <!-- In Progress -->
       <div
         class="col-sm-4"
+        id="1"
         cdkDropList
         #inprogressList="cdkDropList"
         [cdkDropListData]="tarefasInPro"
         [cdkDropListConnectedTo]="[todoList,doneList]"
-        (cdkDropListDropped)="onDrop($event)"
+        (cdkDropListDropped)="onDrop(tarefasInPro, $event)"
       >
         <h2>In Progress</h2>
         <mat-card *ngFor="let inpro of tarefasInPro" cdkDrag>
           <mat-card-header>
-            <mat-card-title>{{ inpro.titulo }}</mat-card-title>
+            <mat-card-title id="{{inpro.id}}">{{ inpro.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>
       <!-- Done -->
       <div
         class="col-sm-4"
+        id="2"
         cdkDropList
         #doneList="cdkDropList"
         [cdkDropListData]="tarefasDone"
         [cdkDropListConnectedTo]="[todoList,inprogressList]"
-        (cdkDropListDropped)="onDrop($event)"
+        (cdkDropListDropped)="onDrop(tarefasDone, $event)"
       >
         <h2 class="text-center">Done</h2>
         <mat-card *ngFor="let done of tarefasDone" cdkDrag>
           <mat-card-header>
-            <mat-card-title>{{ done.titulo }}</mat-card-title>
+            <mat-card-title id="{{done.id}}">{{ done.titulo }}</mat-card-title>
           </mat-card-header>
         </mat-card>
       </div>

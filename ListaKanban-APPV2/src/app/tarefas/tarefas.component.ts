@@ -37,7 +37,7 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  onDrop(event: CdkDragDrop<Tarefa[]>) {
+  onDrop(tarefa: Tarefa, event: CdkDragDrop<Tarefa[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data,
         event.previousIndex, event.currentIndex);
@@ -45,6 +45,17 @@ export class TarefasComponent implements OnInit {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex, event.currentIndex);
+        console.log( event.item.element.nativeElement );
+        var status = parseInt(event.container.id);
+        if (status == 0){
+          this.editarTarefa(tarefa.id, 0 , tarefa);
+        }
+        if (status == 1){
+          this.editarTarefa(tarefa.id, 1 , tarefa);
+        }
+        if ( status == 2){
+          this.editarTarefa(tarefa.id, 2 , tarefa);
+        }
     }
   }
 
@@ -93,8 +104,15 @@ export class TarefasComponent implements OnInit {
     );
   }
 
-  editarTarefa(tarefa: Tarefa){
-
+  editarTarefa(id: number, status: number, tarefa: Tarefa){
+    console.log(id);
+    tarefa.status = status;
+    this.http.put(`http://localhost:5000/api/tarefas/${tarefa.id}`, tarefa).subscribe(
+      () => {
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 
 }
