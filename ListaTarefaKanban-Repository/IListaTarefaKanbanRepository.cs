@@ -13,8 +13,9 @@ namespace ListaTarefaKanban_Repository
 
         //TAREFAS
         Task<Tarefa[]> GetAllTarefaAsync();
-        Task<Tarefa[]> GetAllTarefaResponsavel(int responsavelId);
+        Task<Tarefa[]> GetAllTarefaResponsavel(string responsavelNome);
         Task<Usuario[]> GetAllResponsavelAsync();
+        Task<Tarefa[]> GetTarefaStatusAsync(int status);
         
     }
 }

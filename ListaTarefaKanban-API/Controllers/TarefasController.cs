@@ -37,14 +37,27 @@ namespace ListaTarefaKanban_API.Controllers
             }
 
         }
-
-        // GET TAREFAS
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        // GET TAREFAS STATUS
+        [HttpGet("getByStatus/{status}")]
+        public async Task<IActionResult> Get(int status)
         {
             try
             {
-                var results = await _repo.GetAllTarefaResponsavel(id);
+                var results = await _repo.GetTarefaStatusAsync(status);
+                return Ok(results);
+            }
+            catch (System.Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco Dados Falhou");
+            }
+        }
+        // GET TAREFAS
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string nome)
+        {
+            try
+            {
+                var results = await _repo.GetAllTarefaResponsavel(nome);
                 return Ok(results);
             }
             catch (System.Exception)
@@ -75,12 +88,12 @@ namespace ListaTarefaKanban_API.Controllers
         }
 
         // PUT 
-        [HttpPut("{TarefaId}")]
-        public async Task<IActionResult> Put(int TarefaId, Tarefa model)
+        [HttpPut("{responsavelNome}")]
+        public async Task<IActionResult> Put(string responsavelNome, Tarefa model)
         {
             try
             {
-                var evento = await _repo.GetAllTarefaResponsavel(TarefaId);
+                var evento = await _repo.GetAllTarefaResponsavel(responsavelNome);
 
                 if (evento == null) return NotFound();
 
@@ -88,7 +101,7 @@ namespace ListaTarefaKanban_API.Controllers
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"/api/tarefas/{model.Id}", model);
+                    return Created($"/api/tarefas/{model.Responsavel.Nome}", model);
                 }
             }
             catch (System.Exception)
@@ -99,30 +112,30 @@ namespace ListaTarefaKanban_API.Controllers
             return BadRequest();
         }
 
-        // DELETE 
-        [HttpDelete("{TarefaId}")]
-        public async Task<IActionResult> Delete(int TarefaId)
-        {
-            try
-            {
-                var evento = await _repo.GetAllTarefaResponsavel(TarefaId);
+        // // DELETE 
+        // [HttpDelete("{TarefaId}")]
+        // public async Task<IActionResult> Delete(int TarefaId)
+        // {
+        //     try
+        //     {
+        //         var evento = await _repo.GetAllTarefaResponsavel(TarefaId);
 
-                if (evento == null) return NotFound();
+        //         if (evento == null) return NotFound();
 
-                _repo.Delete(evento);
+        //         _repo.Delete(evento);
 
-                if (await _repo.SaveChangesAsync())
-                {
-                    return Ok();
-                }
-            }
-            catch (System.Exception)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco Dados Falhou");
-            }
+        //         if (await _repo.SaveChangesAsync())
+        //         {
+        //             return Ok();
+        //         }
+        //     }
+        //     catch (System.Exception)
+        //     {
+        //         return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco Dados Falhou");
+        //     }
 
-            return BadRequest();
-        }
+        //     return BadRequest();
+        // }
 
     }
 

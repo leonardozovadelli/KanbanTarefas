@@ -45,24 +45,22 @@ namespace ListaTarefaKanban_Repository
         }
 
         //TAREFAS por status
-        public async Task<Tarefa[]> GetTarefaStatusAsync()
+        public async Task<Tarefa[]> GetTarefaStatusAsync(int status)
         {
             IQueryable<Tarefa> query = _context.Tarefas
-            .Include(c => c.Responsavel);
-
-            query = query.OrderBy(c => c.Responsavel.Id);
+            .Where(d => d.Status == status);
 
             return await query.ToArrayAsync();
 
         }
 
-        public async Task<Tarefa[]> GetAllTarefaResponsavel(int responsavelId)
+        public async Task<Tarefa[]> GetAllTarefaResponsavel(string responsavelNome)
         {
             IQueryable<Tarefa> query = _context.Tarefas
             .Include(c => c.Responsavel);
 
             query = query.OrderBy(c => c.DataRealInicio)
-                        .Where(c => c.UsuarioId == responsavelId);
+                        .Where(c => c.Responsavel.Nome == responsavelNome);
 
             return await query.ToArrayAsync();
         }
