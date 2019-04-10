@@ -16,16 +16,25 @@ export class TarefasComponent implements OnInit {
     let classes =[]
     if(esfPrev < esfReal){
       classes = [
-        'glyphicon glyphicon-info-sign ml-auto mr-auto mt-auto mb-auto'
+        'glyphicon glyphicon-info-sign position-absolute'
       ]
     }
     return classes;
   }
 
+  borderLeft(prio: number){
+    let colors = [
+      'borderLeftBaixa',
+      'borderLeftMedia',
+      'borderLeftAlta',
+    ]
+    return colors[prio];
+  }
+
   mudarTexto(prio: number){
     let textos = [
       'Baixa',
-      'Media',
+      'Média',
       'Alta'
     ]
     return textos[prio];
