@@ -60,10 +60,10 @@ namespace ListaTarefaKanban_Repository
         public async Task<Tarefa[]> GetAllTarefaResponsavel(string responsavelNome)
         {
             IQueryable<Tarefa> query = _context.Tarefas
-            .Include(c => c.Responsavel);
+            .Include(c => c.Responsavel)
+            .Where(c => c.Responsavel.Nome.IndexOf(responsavelNome) != -1);
 
-            query = query.OrderBy(c => c.Prioridade)
-                        .Where(c => c.Responsavel.Nome.IndexOf(responsavelNome) == -1) ;
+            query = query.OrderBy(c => c.Prioridade);
 
             return await query.ToArrayAsync();
         }

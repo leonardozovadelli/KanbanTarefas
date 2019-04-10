@@ -52,7 +52,7 @@ namespace ListaTarefaKanban_API.Controllers
             }
         }
         // GET TAREFAS
-        [HttpGet("{id}")]
+        [HttpGet("{nome}")]
         public async Task<IActionResult> Get(string nome)
         {
             try

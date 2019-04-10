@@ -12,17 +12,17 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  inserirIcon(esfPrev: number, esfReal: number){
-    let classes =[]
-    if(esfPrev < esfReal){
+  inserirIcon(esfPrev: number, esfReal: number) {
+    let classes = []
+    if (esfPrev < esfReal) {
       classes = [
-        'glyphicon glyphicon-info-sign position-absolute'
+        'glyphicon glyphicon-warning-sign position-absolute'
       ]
     }
     return classes;
   }
 
-  borderLeft(prio: number){
+  borderLeft(prio: number) {
     let colors = [
       'borderLeftBaixa',
       'borderLeftMedia',
@@ -31,7 +31,7 @@ export class TarefasComponent implements OnInit {
     return colors[prio];
   }
 
-  mudarTexto(prio: number){
+  mudarTexto(prio: number) {
     let textos = [
       'Baixa',
       'Média',
@@ -43,18 +43,17 @@ export class TarefasComponent implements OnInit {
   mudarCor(prio: number) {
     console.log("prio");
     let classes = [
-      'baixa',
-      'media',
-      'alta'
+      'bgBaixa',
+      'bgMedia',
+      'bgAlta'
     ]
     return classes[prio];
   }
 
-  tarefasTodo: Tarefa[];
-  tarefasInPro: Tarefa[];
-  tarefasDone: Tarefa[];
-  inicializar: any = [];
-  testes: any = [];
+  tarefasTodo: Tarefa[] = [];
+  tarefasInPro: Tarefa[] = [];
+  tarefasDone: Tarefa[] = [];
+  tarefas: Tarefa[] = [];
   usuarios: any;
 
   onDrop(event: CdkDragDrop<Tarefa[]>) {
@@ -73,13 +72,13 @@ export class TarefasComponent implements OnInit {
       // console.log("Objeto:");
       // console.log(event.container.data[event.currentIndex]);
       var status = parseInt(event.container.id);
-      if (status == 0) {
+      if (status === 0) {
         this.editarTarefa(event.container.data[event.currentIndex].id, 0, event.container.data[event.currentIndex]);
       }
-      if (status == 1) {
+      if (status === 1) {
         this.editarTarefa(event.container.data[event.currentIndex].id, 1, event.container.data[event.currentIndex]);
       }
-      if (status == 2) {
+      if (status === 2) {
         this.editarTarefa(event.container.data[event.currentIndex].id, 2, event.container.data[event.currentIndex]);
       }
     } else {
@@ -89,6 +88,7 @@ export class TarefasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getTarefas();
     this.getUsuarios();
     this.getTarefasStatus(0);
     this.getTarefasStatus(1);
@@ -102,7 +102,36 @@ export class TarefasComponent implements OnInit {
           this.tarefasTodo = response;
         } else if (status === 1 && response != null) {
           this.tarefasInPro = response;
-        } else if (status === 2 && response != null){
+        } else if (status === 2 && response != null) {
+          this.tarefasDone = response;
+        }
+      }, error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTarefas() {
+    this.http.get('http://localhost:5000/api/tarefas').subscribe(
+      (response: Tarefa[]) => {
+        this.tarefas = response;
+      }, error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTarefasPorUsuario(nome: string, status: number) {
+    this.tarefasTodo = [];
+    this.tarefasInPro = [];
+    this.tarefasDone = [];
+    this.http.get('http://localhost:5000/api/tarefas/' + nome).subscribe(
+      (response: Tarefa[]) => {
+        if (status === 0 && response != null) {
+          this.tarefasTodo = response;
+        } else if (status === 1 && response != null) {
+          this.tarefasInPro = response;
+        } else if (status === 2 && response != null) {
           this.tarefasDone = response;
         }
       }, error => {
