@@ -21,29 +21,13 @@ namespace ListaTarefaKanban_API.Controllers
             _repo = repo;
         }
 
-
-        //GET Tarefas
+        // GET TAREFAS STATUS
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var results = await _repo.GetAllTarefaAsync();
-                return Ok(results);
-            }
-            catch (System.Exception)
-            {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco Dados Falhou");
-            }
-
-        }
-        // GET TAREFAS STATUS
-        [HttpGet("getByStatus/{status}")]
-        public async Task<IActionResult> Get(int status)
-        {
-            try
-            {
-                var results = await _repo.GetTarefaStatusAsync(status);
+                var results = await _repo.GetTarefaStatusAsync();
                 return Ok(results);
             }
             catch (System.Exception)

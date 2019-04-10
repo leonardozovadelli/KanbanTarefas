@@ -12,6 +12,8 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  valorUsuario: any;
+
   inserirIcon(esfPrev: number, esfReal: number) {
     let classes = []
     if (esfPrev < esfReal) {
@@ -41,7 +43,6 @@ export class TarefasComponent implements OnInit {
   }
 
   mudarCor(prio: number) {
-    console.log("prio");
     let classes = [
       'bgBaixa',
       'bgMedia',
@@ -61,16 +62,6 @@ export class TarefasComponent implements OnInit {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex, event.currentIndex);
-      // console.log("Estava (previous):");
-      // console.log(event.previousContainer.data);
-      // console.log("Foi para (container):");
-      // console.log(event.container.data);
-      // console.log("Estava (previous):");
-      // console.log(event.previousIndex);
-      // console.log("Foi para (index):");
-      // console.log(event.currentIndex);
-      // console.log("Objeto:");
-      // console.log(event.container.data[event.currentIndex]);
       var status = parseInt(event.container.id);
       if (status === 0) {
         this.editarTarefa(event.container.data[event.currentIndex].id, 0, event.container.data[event.currentIndex]);
@@ -90,21 +81,15 @@ export class TarefasComponent implements OnInit {
   ngOnInit() {
     this.getTarefas();
     this.getUsuarios();
-    this.getTarefasStatus(0);
-    this.getTarefasStatus(1);
-    this.getTarefasStatus(2);
+    this.getTarefasStatus();
   }
 
-  getTarefasStatus(status: number) {
-    this.http.get('http://localhost:5000/api/tarefas/getByStatus/' + status).subscribe(
-      (response: Tarefa[]) => {
-        if (status === 0 && response != null) {
-          this.tarefasTodo = response;
-        } else if (status === 1 && response != null) {
-          this.tarefasInPro = response;
-        } else if (status === 2 && response != null) {
-          this.tarefasDone = response;
-        }
+  getTarefasStatus() {
+    this.http.get('http://localhost:5000/api/tarefas').subscribe(
+      (response: any) => {
+        this.tarefasTodo = response.todo;
+        this.tarefasInPro = response.inpro;
+        this.tarefasDone = response.done;
       }, error => {
         console.log(error);
       }
@@ -121,23 +106,21 @@ export class TarefasComponent implements OnInit {
     );
   }
 
-  getTarefasPorUsuario(nome: string, status: number) {
-    this.tarefasTodo = [];
-    this.tarefasInPro = [];
-    this.tarefasDone = [];
-    this.http.get('http://localhost:5000/api/tarefas/' + nome).subscribe(
-      (response: Tarefa[]) => {
-        if (status === 0 && response != null) {
-          this.tarefasTodo = response;
-        } else if (status === 1 && response != null) {
-          this.tarefasInPro = response;
-        } else if (status === 2 && response != null) {
-          this.tarefasDone = response;
+  getTarefasPorUsuario(nome: String) {
+    if (nome.toLocaleLowerCase() === 'todos') {
+      this.getTarefasStatus();
+    } else {
+      this.http.get('http://localhost:5000/api/tarefas/' + nome).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.tarefasTodo = response.todo;
+          this.tarefasInPro = response.inpro;
+          this.tarefasDone = response.done;
+        }, error => {
+          console.log(error);
         }
-      }, error => {
-        console.log(error);
-      }
-    );
+      );
+    }
   }
 
   getUsuarios() {

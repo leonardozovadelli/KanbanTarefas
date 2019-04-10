@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ListaTarefaKanban_Domain;
@@ -21,7 +22,7 @@ namespace ListaTarefaKanban_Repository
         }
         public void Add<T>(T entity) where T : class
         {
-             _context.Add(entity);
+            _context.Add(entity);
         }
         public void Update<T>(T entity) where T : class
         {
@@ -45,19 +46,38 @@ namespace ListaTarefaKanban_Repository
         }
 
         //TAREFAS por status
-        public async Task<Tarefa[]> GetTarefaStatusAsync(int status)
+        public async Task<object> GetTarefaStatusAsync()
         {
             IQueryable<Tarefa> query = _context.Tarefas
             .Include(r => r.Responsavel);
-            
-            query = query.Where(d => d.Status == status)
+
+            query = query
             .OrderByDescending(t => t.Prioridade);
 
-            return await query.ToArrayAsync();
+            List<Tarefa> todo = new List<Tarefa>();
+            List<Tarefa> inpro = new List<Tarefa>();
+            List<Tarefa> done = new List<Tarefa>();
+
+            foreach (Tarefa tar in query)
+            {
+                switch (tar.Status)
+                {
+                    case 0: todo.Add(tar); break;
+                    case 1: inpro.Add(tar); break;
+                    case 2: done.Add(tar); break;
+                }
+            }
+
+            return new
+            {
+                todo,
+                inpro,
+                done
+            };
 
         }
 
-        public async Task<Tarefa[]> GetAllTarefaResponsavel(string responsavelNome)
+        public async Task<object> GetAllTarefaResponsavel(string responsavelNome)
         {
             IQueryable<Tarefa> query = _context.Tarefas
             .Include(c => c.Responsavel)
@@ -65,7 +85,26 @@ namespace ListaTarefaKanban_Repository
 
             query = query.OrderBy(c => c.Prioridade);
 
-            return await query.ToArrayAsync();
+            List<Tarefa> todo = new List<Tarefa>();
+            List<Tarefa> inpro = new List<Tarefa>();
+            List<Tarefa> done = new List<Tarefa>();
+
+            foreach (Tarefa tar in query)
+            {
+                switch (tar.Status)
+                {
+                    case 0: todo.Add(tar); break;
+                    case 1: inpro.Add(tar); break;
+                    case 2: done.Add(tar); break;
+                }
+            }
+
+            return new
+            {
+                todo,
+                inpro,
+                done
+            };
         }
 
         //Usuario

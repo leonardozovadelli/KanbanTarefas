@@ -1,94 +1,110 @@
 <div class="container">
   <div class="row" style="display: inline-block;">
-    <label  class="col-sm-6">Responsavel: </label>
-    <select  class="form-control col-sm-6" onchange="getTarefasPorUsuario(usuario.nome, tarefa.status)">
-      <option *ngFor="let usuario of usuarios; let tarefa of tarefas" value="{{ usuario.id }}">
+    <label class="form-control col-sm-4">Responsavel: </label>
+    <select class="form-control col-sm-5" [(ngModel)]="valorUsuario">
+      <option value="todos" selected>Todos</option>
+      <option *ngFor="let usuario of usuarios" value="{{ usuario.nome }}">
         {{ usuario.nome }}</option
       >
     </select>
+    <button
+      (click)="getTarefasPorUsuario(valorUsuario)"
+      class="btn btn-primary col-sm-3"
+    >
+      Buscar
+    </button>
   </div>
-    <div class="row" >
-      <!-- To Do -->
-      <div
-        class="col-sm-4"
-        id="0"
-        cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="tarefasTodo"
-        [cdkDropListConnectedTo]="[inprogressList, doneList]"
-        (cdkDropListDropped)="onDrop($event)"
+</div>
+<div class="container">
+  <div class="row">
+    <!-- To Do -->
+    <div
+      class="col-sm-4"
+      id="0"
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="tarefasTodo"
+      [cdkDropListConnectedTo]="[inprogressList, doneList]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      <h2>To Do</h2>
+      <mat-card
+        *ngFor="let todo of tarefasTodo"
+        [ngClass]="borderLeft(todo.prioridade)"
+        cdkDrag
       >
-        <h2>To Do</h2>
-        <mat-card
-          *ngFor="let todo of tarefasTodo"
-          [ngClass]="borderLeft(todo.prioridade)"
-          cdkDrag
-        >
-          <mat-card-header>
-            <i [ngClass]="inserirIcon(todo.esforcoPrev, todo.esforcoReal)"></i>
-            <mat-card-title id="{{ todo.id }}">{{
-              todo.titulo
-            }}</mat-card-title>
-            <mat-card-subtitle>Prioridade: <label [ngClass]="mudarCor(todo.prioridade)">{{ mudarTexto(todo.prioridade) }}</label>
-            </mat-card-subtitle>
-            <!-- <mat-card-subtitle>Status: {{ todo.status }}</mat-card-subtitle> -->
-          </mat-card-header>
-        </mat-card>
-      </div>
-      <!-- In Progress -->
-      <div
-        class="col-sm-4"
-        id="1"
-        cdkDropList
-        #inprogressList="cdkDropList"
-        [cdkDropListData]="tarefasInPro"
-        [cdkDropListConnectedTo]="[todoList, doneList]"
-        (cdkDropListDropped)="onDrop($event)"
-      >
-        <h2>In Progress</h2>
-        <mat-card
-          *ngFor="let inpro of tarefasInPro"
-          [ngClass]="borderLeft(inpro.prioridade)"
-          cdkDrag
-        >
-          <mat-card-header>
-            <i
-              [ngClass]="inserirIcon(inpro.esforcoPrev, inpro.esforcoReal)"
-            ></i>
-            <mat-card-title id="{{ inpro.id }}">{{
-              inpro.titulo
-            }}</mat-card-title>
-            <mat-card-subtitle>Prioridade: <label [ngClass]="mudarCor(inpro.prioridade)">{{ mudarTexto(inpro.prioridade) }}</label>
-            </mat-card-subtitle>
-            <!-- <mat-card-subtitle>Status: {{ inpro.status }}</mat-card-subtitle> -->
-          </mat-card-header>
-        </mat-card>
-      </div>
-      <!-- Done -->
-      <div
-        class="col-sm-4"
-        id="2"
-        cdkDropList
-        #doneList="cdkDropList"
-        [cdkDropListData]="tarefasDone"
-        [cdkDropListConnectedTo]="[todoList, inprogressList]"
-        (cdkDropListDropped)="onDrop($event)"
-      >
-        <h2 class="text-center">Done</h2>
-        <mat-card
-          *ngFor="let done of tarefasDone"
-          [ngClass]="borderLeft(done.prioridade)"
-          cdkDrag
-          id="{{ done.id }}"
-        >
-          <mat-card-header>
-            <i [ngClass]="inserirIcon(done.esforcoPrev, done.esforcoReal)"></i>
-            <mat-card-title>{{ done.titulo }}</mat-card-title>
-            <mat-card-subtitle>Prioridade:<label [ngClass]="mudarCor(done.prioridade)">{{ mudarTexto(done.prioridade) }}</label>
-            </mat-card-subtitle>
-            <!-- <mat-card-subtitle>Status: {{ done.status }}</mat-card-subtitle> -->
-          </mat-card-header>
-        </mat-card>
-      </div>
+        <mat-card-header>
+          <i [ngClass]="inserirIcon(todo.esforcoPrev, todo.esforcoReal)"></i>
+          <mat-card-title id="{{ todo.id }}">{{ todo.titulo }}</mat-card-title>
+          <mat-card-subtitle
+            >Prioridade:
+            <label [ngClass]="mudarCor(todo.prioridade)">{{
+              mudarTexto(todo.prioridade)
+            }}</label>
+          </mat-card-subtitle>
+          <!-- <mat-card-subtitle>Status: {{ todo.status }}</mat-card-subtitle> -->
+        </mat-card-header>
+      </mat-card>
     </div>
+    <!-- In Progress -->
+    <div
+      class="col-sm-4"
+      id="1"
+      cdkDropList
+      #inprogressList="cdkDropList"
+      [cdkDropListData]="tarefasInPro"
+      [cdkDropListConnectedTo]="[todoList, doneList]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      <h2>In Progress</h2>
+      <mat-card
+        *ngFor="let inpro of tarefasInPro"
+        [ngClass]="borderLeft(inpro.prioridade)"
+        cdkDrag
+      >
+        <mat-card-header>
+          <i [ngClass]="inserirIcon(inpro.esforcoPrev, inpro.esforcoReal)"></i>
+          <mat-card-title id="{{ inpro.id }}">{{
+            inpro.titulo
+          }}</mat-card-title>
+          <mat-card-subtitle
+            >Prioridade:
+            <label [ngClass]="mudarCor(inpro.prioridade)">{{
+              mudarTexto(inpro.prioridade)
+            }}</label>
+          </mat-card-subtitle>
+          <!-- <mat-card-subtitle>Status: {{ inpro.status }}</mat-card-subtitle> -->
+        </mat-card-header>
+      </mat-card>
+    </div>
+    <!-- Done -->
+    <div
+      class="col-sm-4"
+      id="2"
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="tarefasDone"
+      [cdkDropListConnectedTo]="[todoList, inprogressList]"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      <h2 class="text-center">Done</h2>
+      <mat-card
+        *ngFor="let done of tarefasDone"
+        [ngClass]="borderLeft(done.prioridade)"
+        cdkDrag
+        id="{{ done.id }}"
+      >
+        <mat-card-header>
+          <i [ngClass]="inserirIcon(done.esforcoPrev, done.esforcoReal)"></i>
+          <mat-card-title>{{ done.titulo }}</mat-card-title>
+          <mat-card-subtitle
+            >Prioridade:<label [ngClass]="mudarCor(done.prioridade)">{{
+              mudarTexto(done.prioridade)
+            }}</label>
+          </mat-card-subtitle>
+          <!-- <mat-card-subtitle>Status: {{ done.status }}</mat-card-subtitle> -->
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
 </div>
