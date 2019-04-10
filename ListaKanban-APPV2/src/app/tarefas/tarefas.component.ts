@@ -12,7 +12,7 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  valorUsuario: any;
+  valorUsuario: any = 'todos';
 
   inserirIcon(esfPrev: number, esfReal: number) {
     let classes = []
