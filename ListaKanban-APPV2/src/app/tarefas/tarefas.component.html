@@ -25,12 +25,12 @@
           [ngClass]="mudarCor(todo.prioridade)"
         >
           <mat-card-header>
-              <i [ngClass]="inserirIcon(todo.esforcoPrev, todo.esforcoReal)"></i>
+            <i [ngClass]="inserirIcon(todo.esforcoPrev, todo.esforcoReal)"></i>
             <mat-card-title id="{{ todo.id }}">{{
               todo.titulo
             }}</mat-card-title>
             <mat-card-subtitle
-              >Prioridade: {{ todo.prioridade }}</mat-card-subtitle
+              >Prioridade: {{ mudarTexto(todo.prioridade) }}</mat-card-subtitle
             >
             <mat-card-subtitle>Status: {{ todo.status }}</mat-card-subtitle>
           </mat-card-header>
@@ -53,13 +53,15 @@
           cdkDrag
         >
           <mat-card-header>
-              <i [ngClass]="inserirIcon(inpro.esforcoPrev, inpro.esforcoReal)"></i>
+            <i
+              [ngClass]="inserirIcon(inpro.esforcoPrev, inpro.esforcoReal)"
+            ></i>
             <mat-card-title id="{{ inpro.id }}">{{
               inpro.titulo
             }}</mat-card-title>
             <mat-card-subtitle
-              >Prioridade: {{ inpro.prioridade }}</mat-card-subtitle
-            >
+              >Prioridade: {{ mudarTexto(inpro.prioridade) }}
+            </mat-card-subtitle>
             <mat-card-subtitle>Status: {{ inpro.status }}</mat-card-subtitle>
           </mat-card-header>
         </mat-card>
@@ -82,10 +84,10 @@
           id="{{ done.id }}"
         >
           <mat-card-header>
-              <i [ngClass]="inserirIcon(done.esforcoPrev, done.esforcoReal)"></i>
+            <i [ngClass]="inserirIcon(done.esforcoPrev, done.esforcoReal)"></i>
             <mat-card-title>{{ done.titulo }}</mat-card-title>
             <mat-card-subtitle
-              >Prioridade: {{ done.prioridade }}</mat-card-subtitle
+              >Prioridade: {{ mudarTexto(done.prioridade) }}</mat-card-subtitle
             >
             <mat-card-subtitle>Status: {{ done.status }}</mat-card-subtitle>
           </mat-card-header>

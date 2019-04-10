@@ -22,6 +22,15 @@ export class TarefasComponent implements OnInit {
     return classes;
   }
 
+  mudarTexto(prio: number){
+    let textos = [
+      'Baixa',
+      'Media',
+      'Alta'
+    ]
+    return textos[prio];
+  }
+
   mudarCor(prio: number) {
     console.log("prio");
     let classes = [

@@ -62,8 +62,8 @@ namespace ListaTarefaKanban_Repository
             IQueryable<Tarefa> query = _context.Tarefas
             .Include(c => c.Responsavel);
 
-            query = query.OrderBy(c => c.DataRealInicio)
-                        .Where(c => c.Responsavel.Nome == responsavelNome);
+            query = query.OrderBy(c => c.Prioridade)
+                        .Where(c => c.Responsavel.Nome.IndexOf(responsavelNome) == -1) ;
 
             return await query.ToArrayAsync();
         }
