@@ -12,7 +12,7 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  //ngModel
+  //ngModel do filtro
   valorUsuario: any = 'todos';
 
   inserirIcon(esfPrev: number, esfReal: number) {
@@ -66,13 +66,13 @@ export class TarefasComponent implements OnInit {
         event.previousIndex, event.currentIndex);
       const status = parseInt(event.container.id, 10);
       if (status === 0) {
-        this.editarTarefa(event.container.data[event.currentIndex].id, 0, event.container.data[event.currentIndex]);
+        this.editarTarefa(event.container.data[event.currentIndex].id, status, event.container.data[event.currentIndex]);
       }
       if (status === 1) {
-        this.editarTarefa(event.container.data[event.currentIndex].id, 1, event.container.data[event.currentIndex]);
+        this.editarTarefa(event.container.data[event.currentIndex].id, status, event.container.data[event.currentIndex]);
       }
       if (status === 2) {
-        this.editarTarefa(event.container.data[event.currentIndex].id, 2, event.container.data[event.currentIndex]);
+        this.editarTarefa(event.container.data[event.currentIndex].id, status, event.container.data[event.currentIndex]);
       }
     } else {
       moveItemInArray(event.container.data,
@@ -89,12 +89,9 @@ export class TarefasComponent implements OnInit {
   getTarefasStatus() {
     this.http.get('http://localhost:5000/api/tarefas').subscribe(
       (response: any) => {
-        console.log("Response");
-        console.log(response);
         this.tarefasTodo = response.todo;
         this.tarefasInPro = response.inpro;
         this.tarefasDone = response.done;
-        
       }, error => {
         console.log(error);
       }
