@@ -1,3 +1,4 @@
+import { Usuario } from './Usuario';
 
 export interface Tarefa {
     id: number;
@@ -10,5 +11,6 @@ export interface Tarefa {
     esforcoReal: number;
     status: number;
     prioridade: number;
+    responsavel: Usuario;
     usuarioId: number;
 }

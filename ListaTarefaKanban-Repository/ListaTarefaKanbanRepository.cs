@@ -33,7 +33,7 @@ namespace ListaTarefaKanban_Repository
             _context.Remove(entity);
         }
 
-        //TAREFAS
+        //AllTAREFAS
         public async Task<Tarefa[]> GetAllTarefaAsync()
         {
             IQueryable<Tarefa> query = _context.Tarefas
@@ -77,6 +77,7 @@ namespace ListaTarefaKanban_Repository
 
         }
 
+        //TAREFAS p/ Responsavel
         public async Task<object> GetAllTarefaResponsavel(string responsavelNome)
         {
             IQueryable<Tarefa> query = _context.Tarefas
@@ -107,7 +108,7 @@ namespace ListaTarefaKanban_Repository
             };
         }
 
-        //Usuario
+        //AllUsuario
         public async Task<Usuario[]> GetAllResponsavelAsync()
         {
             IQueryable<Usuario> query = _context.Usuarios
