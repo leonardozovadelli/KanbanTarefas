@@ -35,7 +35,7 @@ namespace ListaTarefaKanban_API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Banco Dados Falhou");
             }
         }
-        // GET TAREFAS
+        // GET TAREFAS POR RESPONSAVEL
         [HttpGet("{nome}")]
         public async Task<IActionResult> Get(string nome)
         {
@@ -50,7 +50,7 @@ namespace ListaTarefaKanban_API.Controllers
             }
         }
 
-        // POST
+        // POST TAREFAS
         [HttpPost]
         public async Task<IActionResult> Post(Tarefa model)
         {
