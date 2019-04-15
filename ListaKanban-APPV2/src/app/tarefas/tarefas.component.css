@@ -75,7 +75,11 @@
   .borderLeftBaixa {
     border-left-color: rgb(50, 170, 30);
   }
-  
+
+  .scrollTarefas {
+    height:800px;
+    overflow-y: scroll;
+  }
 
   /* * {
     border: 1px solid gray;
