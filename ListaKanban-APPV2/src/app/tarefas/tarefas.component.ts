@@ -12,6 +12,12 @@ export class TarefasComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  ngOnInit() {
+    this.getTarefas();
+    this.getUsuarios();
+    this.getTarefasStatus();
+  }
+
   //ngModel do filtro
   valorUsuario: any = 'todos';
 
@@ -78,12 +84,6 @@ export class TarefasComponent implements OnInit {
       moveItemInArray(event.container.data,
         event.previousIndex, event.currentIndex);
     }
-  }
-
-  ngOnInit() {
-    this.getTarefas();
-    this.getUsuarios();
-    this.getTarefasStatus();
   }
 
   getTarefasStatus() {
